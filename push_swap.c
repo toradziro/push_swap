@@ -1,5 +1,10 @@
 #include "push_swap.h"
 
+/*
+ * Написать анализатор входящего стека на валидность
+ * Написать проверку выполняемости каждого действия
+ */
+
 int		main(int argc, char **argv)
 {
 	t_two_stacks	*stacks;
@@ -10,14 +15,24 @@ int		main(int argc, char **argv)
 		printf("too less argc's\n");
 		return (1);
 	}
-	i = 1;
+	i = argc - 1;
 	stacks = stacks_init(NULL, NULL);
-	while (i < argc)
+	while (i > 0)
 	{
 		stacks->a = push(stacks->a, atoi(argv[i]));
-		++i;
+		--i;
 	}
-	ra(&stacks);
+	find_limits(stacks);
+	/*
+	 * Вызов обработчика сортировки
+	 */
+	//printf("%d\n", stacks->a->length);
+	sort_distributor(&stacks);
+	//printf ("Here starts stack 'b'\n");
+	printf("\n");
+	//while (stacks->b)
+	//	printf("%d\n", pop(&stacks->b));
+	printf ("Here starts stack 'a'\n");
 	while (stacks->a)
 		printf("%d\n", pop(&stacks->a));
 	return (0);
