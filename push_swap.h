@@ -34,6 +34,7 @@ t_stack			*push(t_stack *stack, i32 value);
 i32				pop(t_stack **stack);
 t_two_stacks	*stacks_init(t_stack *a, t_stack *b);
 void			find_limits(t_two_stacks *stacks);
+void			find_limits_b(t_two_stacks *stacks);
 
 
 void			sa(t_two_stacks *stacks);
@@ -56,5 +57,8 @@ void			check_first_two_elems(t_two_stacks **stack);
 
 void			three_elems_case(t_two_stacks **stacks);
 void		 	five_elems_case(t_two_stacks **stacks);
+void			sort_slow(t_two_stacks **stacks);
+
+i32				is_sorted(t_stack *a);
 
 #endif

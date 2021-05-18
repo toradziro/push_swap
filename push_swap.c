@@ -23,17 +23,9 @@ int		main(int argc, char **argv)
 		--i;
 	}
 	find_limits(stacks);
-	/*
-	 * Вызов обработчика сортировки
-	 */
-	//printf("%d\n", stacks->a->length);
 	sort_distributor(&stacks);
-	//printf ("Here starts stack 'b'\n");
-	printf("\n");
-	//while (stacks->b)
-	//	printf("%d\n", pop(&stacks->b));
-	printf ("Here starts stack 'a'\n");
-	while (stacks->a)
-		printf("%d\n", pop(&stacks->a));
+//	printf ("Here starts stack 'a'\n");
+//	while (stacks->a)
+//		printf("%d\n", pop(&stacks->a));
 	return (0);
 }

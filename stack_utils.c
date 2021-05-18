@@ -53,8 +53,8 @@ t_two_stacks	*stacks_init(t_stack *a, t_stack *b)
 		return (NULL);
 	new->a = a;
 	new->b = b;
-	new->min = I_32_MAX;
-	new->max = I_32_MIN;
+	new->min = 0;
+	new->max = 0;
 	new->len_b = 0;
 	return (new);
 }
@@ -64,6 +64,8 @@ void 		find_limits(t_two_stacks *stacks)
 	t_stack	*iter;
 
 	iter = stacks->a;
+	stacks->min = I_32_MAX;
+	stacks->max = I_32_MIN;
 	while (iter)
 	{
 		if (iter->value > stacks->max)
@@ -77,6 +79,39 @@ void 		find_limits(t_two_stacks *stacks)
 			stacks->min = iter->value;
 		iter = iter->next;
 	}
+}
+
+void			find_limits_b(t_two_stacks *stacks)
+{
+	t_stack	*iter;
+
+	iter = stacks->b;
+	stacks->min = I_32_MAX;
+	stacks->max = I_32_MIN;
+	while (iter)
+	{
+		if (iter->value > stacks->max)
+			stacks->max = iter->value;
+		iter = iter->next;
+	}
+	iter = stacks->b;
+	while (iter)
+	{
+		if (iter->value < stacks->min)
+			stacks->min = iter->value;
+		iter = iter->next;
+	}
+}
+
+i32		is_sorted(t_stack *a)
+{
+	while (a->next)
+	{
+		if (a->value > a->next->value)
+			return (1);
+		a = a->next;
+	}
+	return (0);
 }
 
 //void		error_exit(i32 code)
