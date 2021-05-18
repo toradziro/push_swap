@@ -2,7 +2,6 @@
 
 void	sort_slow(t_two_stacks **stacks)
 {
-
 }
 /*
  * рекурсивно делить стек на две части

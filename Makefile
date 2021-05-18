@@ -9,7 +9,8 @@ SRCS =	moves_pa.c \
 		stack_analizer.c \
 		three_elems_case.c \
 		five_elems_case.c \
-		other_amounts.c
+		other_amounts.c \
+		indexing.c
 
 OBJS =	$(SRCS:.c=.o)
 

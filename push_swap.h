@@ -17,6 +17,7 @@ typedef struct	s_stack {
 		struct	s_stack *next;
 		u32		length;
 		i32		value;
+		i32		index;
 }				t_stack;
 
 typedef struct	s_two_stacks {
@@ -36,6 +37,9 @@ t_two_stacks	*stacks_init(t_stack *a, t_stack *b);
 void			find_limits(t_two_stacks *stacks);
 void			find_limits_b(t_two_stacks *stacks);
 
+void		make_index(t_stack *stack);
+void		q_sort(i32 *num, i32 start, i32 end);
+i32			parti(i32 *num, i32 start, i32 end);
 
 void			sa(t_two_stacks *stacks);
 void			sb(t_two_stacks *stacks);

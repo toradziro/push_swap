@@ -10,7 +10,7 @@ t_stack		*new_stack(i32 value)
 	new->next = NULL;
 	new->value = value;
 	new->length = 1;
-	//new->current = NULL;
+	new->index = 0;
 	return (new);
 }
 

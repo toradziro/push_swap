@@ -22,8 +22,9 @@ int		main(int argc, char **argv)
 		stacks->a = push(stacks->a, atoi(argv[i]));
 		--i;
 	}
-	find_limits(stacks);
-	sort_distributor(&stacks);
+	//find_limits(stacks);
+	make_index(stacks->a);
+	//sort_distributor(&stacks);
 //	printf ("Here starts stack 'a'\n");
 //	while (stacks->a)
 //		printf("%d\n", pop(&stacks->a));
