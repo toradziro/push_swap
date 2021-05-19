@@ -1,6 +1,5 @@
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
-# define u32 uint32_t
 # define i32 int32_t
 
 # include <unistd.h>
@@ -15,7 +14,7 @@
 
 typedef struct	s_stack {
 		struct	s_stack *next;
-		u32		length;
+		i32		length;
 		i32		value;
 		i32		index;
 }				t_stack;
@@ -36,10 +35,15 @@ i32				pop(t_stack **stack);
 t_two_stacks	*stacks_init(t_stack *a, t_stack *b);
 void			find_limits(t_two_stacks *stacks);
 void			find_limits_b(t_two_stacks *stacks);
+i32				find_portion(i32 max_index, i32 current_index);
+void 			find_next_elem(t_two_stacks **stacks, i32 current_index);
+i32				count_nodes(t_stack *stack);
+void		 	move_using_ra(t_two_stacks **stacks, i32 current_index);
+void		 	move_using_rra(t_two_stacks **stacks, i32 current_index);
 
-void		make_index(t_stack *stack);
-void		q_sort(i32 *num, i32 start, i32 end);
-i32			parti(i32 *num, i32 start, i32 end);
+void			make_index(t_stack *stack);
+void			q_sort(i32 *num, i32 start, i32 end);
+i32				parti(i32 *num, i32 start, i32 end);
 
 void			sa(t_two_stacks *stacks);
 void			sb(t_two_stacks *stacks);

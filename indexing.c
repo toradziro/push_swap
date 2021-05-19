@@ -34,16 +34,16 @@ void		make_index(t_stack *stack)
 	}
 	tmp = stack;
 	t = 0;
-	while (t < stack->length)
-	{
-		printf("%d%s", arr[t], ((t + 1 == stack->length) ? "\n" : ", "));
-		++t;
-	}
-	while (tmp)
-	{
-		printf("%d%s", tmp->index, (tmp->next ? ", " : "\n"));
-		tmp = tmp->next;
-	}
+//	while (t < stack->length)
+//	{
+//		printf("%d%s", arr[t], ((t + 1 == stack->length) ? "\n" : ", "));
+//		++t;
+//	}
+//	while (tmp)
+//	{
+//		printf("%d%s", tmp->index, (tmp->next ? ", " : "\n"));
+//		tmp = tmp->next;
+//	}
 }
 
 void		q_sort(i32 *num, i32 start, i32 end)

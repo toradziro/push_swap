@@ -3,6 +3,8 @@
 /*
  * Написать анализатор входящего стека на валидность
  * Написать проверку выполняемости каждого действия
+ * Написать модуль очистки
+ * Написать модуль обработки ошибок
  */
 
 int		main(int argc, char **argv)
@@ -24,9 +26,9 @@ int		main(int argc, char **argv)
 	}
 	//find_limits(stacks);
 	make_index(stacks->a);
-	//sort_distributor(&stacks);
-//	printf ("Here starts stack 'a'\n");
-//	while (stacks->a)
-//		printf("%d\n", pop(&stacks->a));
+	sort_distributor(&stacks);
+	printf ("Here starts stack 'a'\n");
+	while (stacks->a)
+		printf("%d\n", pop(&stacks->a));
 	return (0);
 }
