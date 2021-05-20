@@ -21,14 +21,14 @@ int		main(int argc, char **argv)
 	stacks = stacks_init(NULL, NULL);
 	while (i > 0)
 	{
-		stacks->a = push(stacks->a, atoi(argv[i]));
+		stacks->a = push(stacks->a, atoi(argv[i]), 0);
 		--i;
 	}
 	//find_limits(stacks);
 	make_index(stacks->a);
 	sort_distributor(&stacks);
-	printf ("Here starts stack 'a'\n");
-	while (stacks->a)
-		printf("%d\n", pop(&stacks->a));
+//	printf ("Here starts stack 'a'\n");
+//	while (stacks->a)
+//		printf("index: %d, value: %d\n", stacks->a->index, pop(&stacks->a));
 	return (0);
 }

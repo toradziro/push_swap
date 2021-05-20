@@ -10,6 +10,7 @@ void    	ra(t_two_stacks **stacks)
 	change = *stacks;
 	save = change->a->next;
 	tmp = new_stack(change->a->value);
+	tmp->index = change->a->index;
 	to_free = change->a;
 	while (change->a->next)
 		change->a = change->a->next;
@@ -29,6 +30,7 @@ void    rb(t_two_stacks **stacks)
 	change = *stacks;
 	save = change->b->next;
 	tmp = new_stack(change->b->value);
+	tmp->index = change->a->index;
 	to_free = change->b;
 	while (change->b->next)
 		change->b = change->b->next;

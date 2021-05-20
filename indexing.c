@@ -17,7 +17,13 @@ void		make_index(t_stack *stack)
 		tmp = tmp->next;
 		++i;
 	}
-	q_sort(arr, 0, (stack->length));
+	q_sort(arr, 0, (stack->length - 1));
+//	while (t < stack->length)
+//	{
+//		printf ("%d ", arr[t]);
+//		++t;
+//	}
+	t = 0;
 	while (t < stack->length)
 	{
 		tmp = stack;
@@ -34,54 +40,41 @@ void		make_index(t_stack *stack)
 	}
 	tmp = stack;
 	t = 0;
-//	while (t < stack->length)
-//	{
-//		printf("%d%s", arr[t], ((t + 1 == stack->length) ? "\n" : ", "));
-//		++t;
-//	}
-//	while (tmp)
-//	{
-//		printf("%d%s", tmp->index, (tmp->next ? ", " : "\n"));
-//		tmp = tmp->next;
-//	}
+	while (tmp)
+	{
+	//	printf("value: %d, index: %d%s", tmp->value, tmp->index, "\n");
+		tmp = tmp->next;
+	}
 }
 
 void		q_sort(i32 *num, i32 start, i32 end)
 {
 	i32		p;
+	i32		i;
+	i32		j;
+	i32		tmp;
 
 	if (start < end)
 	{
-		p = parti(num, start, end);
-		q_sort(num, start, p);
-		q_sort(num, p + 1, end);
-	}
-}
-
-i32		parti(i32 *num, i32 start, i32 end)
-{
-	i32	p;
-	i32	i;
-	i32	j;
-	i32	tmp;
-
-	p = (end + start) / 2;
-	i = start;
-	j = end - 1;
-	while (i <= j)
-	{
-		while (num[i] < num[p])
-			++i;
-		while (num[j] > num[p])
-			--j;
-		if (i <= j)
+		i = start;
+		j = end;
+		p = num[(i + j) / 2];
+		while (i <= j)
 		{
-			tmp = num[j];
-			num[j] = num[i];
-			num[i] = tmp;
-			--j;
-			++i;
+			while (num[i] < p)
+				++i;
+			while (num[j] > p)
+				--j;
+			if (i <= j)
+			{
+				tmp = num[i];
+				num[i] = num[j];
+				num[j] = tmp;
+				++i;
+				--j;
+			}
 		}
+		q_sort(num, start, j);
+		q_sort(num, i, end);
 	}
-	return (p);
 }

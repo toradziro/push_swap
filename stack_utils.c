@@ -14,17 +14,21 @@ t_stack		*new_stack(i32 value)
 	return (new);
 }
 
-t_stack		*push(t_stack *stack, i32 value)
+t_stack		*push(t_stack *stack, i32 value, i32 index)
 {
 	t_stack	*new;
 	t_stack	*tmp;
 
 	if (!stack)
+	{
 		stack = new_stack(value);
+		stack->index = index;
+	}
 	else
 	{
 		new = new_stack(value); // handle possible errors
 		new->length = stack->length + 1;
+		new->index = index;
 		tmp = stack;
 		stack = new;
 		stack->next = tmp;

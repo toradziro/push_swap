@@ -30,7 +30,7 @@ typedef struct	s_two_stacks {
 //дописать остальные возможные действия
 
 t_stack			*new_stack(i32 value);
-t_stack			*push(t_stack *stack, i32 value);
+t_stack			*push(t_stack *stack, i32 value, i32 index);
 i32				pop(t_stack **stack);
 t_two_stacks	*stacks_init(t_stack *a, t_stack *b);
 void			find_limits(t_two_stacks *stacks);
@@ -40,10 +40,11 @@ void 			find_next_elem(t_two_stacks **stacks, i32 current_index);
 i32				count_nodes(t_stack *stack);
 void		 	move_using_ra(t_two_stacks **stacks, i32 current_index);
 void		 	move_using_rra(t_two_stacks **stacks, i32 current_index);
+i32				find_biggest_index(t_stack *stack);
 
 void			make_index(t_stack *stack);
 void			q_sort(i32 *num, i32 start, i32 end);
-i32				parti(i32 *num, i32 start, i32 end);
+//i32				parti(i32 *num, i32 start, i32 end);
 
 void			sa(t_two_stacks *stacks);
 void			sb(t_two_stacks *stacks);
