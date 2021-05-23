@@ -10,7 +10,10 @@ SRCS =	moves_pa.c \
 		three_elems_case.c \
 		five_elems_case.c \
 		other_amounts.c \
-		indexing.c
+		indexing.c \
+		debug.c \
+		not_so_slow.c \
+		chank_sort.c
 
 OBJS =	$(SRCS:.c=.o)
 

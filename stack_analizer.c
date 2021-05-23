@@ -24,6 +24,6 @@ void	sort_distributor(t_two_stacks **stacks)
 	else if (stacks_p->a->length == FIVE_CASE)
 		five_elems_case(stacks);
 	else
-		sort_slow(stacks);
-		//not_so_so_slow(stacks);
+		//sort_slow(stacks);
+		sort_faster(stacks);
 }

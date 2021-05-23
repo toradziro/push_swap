@@ -5,44 +5,35 @@ void		make_index(t_stack *stack)
 	i32		*arr;
 	i32		i;
 	i32		t;
+	i32		len;
 	t_stack	*tmp;
 
 	i = 0;
-	t = 0;
 	tmp = stack;
-	arr = (i32*)malloc(sizeof(i32) * stack->length);
+	len = count_nodes(stack);
+	arr = (i32*)malloc(sizeof(i32) * len);
 	while (tmp)
 	{
 		arr[i] = tmp->value;
 		tmp = tmp->next;
 		++i;
 	}
-	q_sort(arr, 0, (stack->length - 1));
-//	while (t < stack->length)
-//	{
-//		printf ("%d ", arr[t]);
-//		++t;
-//	}
+	q_sort(arr, 0, len); // проверить len или len - 1
 	t = 0;
-	while (t < stack->length)
+	tmp = stack;
+	while (tmp)
 	{
-		tmp = stack;
-		while (tmp)
+		arr = &arr[0];
+		t = 0;
+		while (t <= len)
 		{
 			if (tmp->value == arr[t])
 			{
-				tmp->index = t + 1;
+				tmp->index = t;
 				break ;
 			}
-			tmp = tmp->next;
+			++t;
 		}
-		++t;
-	}
-	tmp = stack;
-	t = 0;
-	while (tmp)
-	{
-	//	printf("value: %d, index: %d%s", tmp->value, tmp->index, "\n");
 		tmp = tmp->next;
 	}
 }

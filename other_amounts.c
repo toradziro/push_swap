@@ -8,7 +8,7 @@ void	sort_slow(t_two_stacks **stacks)
 
 	stacks_p = *stacks;
 	gap_start = 1;
-	max_index = find_biggest_index(stacks_p->a); //проверить длину и индексацию
+	max_index = find_biggest_index(stacks_p->a);
 	while (gap_start <= max_index)
 	{
 		find_next_elem(stacks, gap_start);
@@ -64,6 +64,26 @@ void 	move_using_rra(t_two_stacks **stacks, i32 current_index)
 	pb(stacks);
 }
 
+void 	move_using_rb(t_two_stacks **stacks, i32 current_index)
+{
+	t_two_stacks	*stacks_p;
+
+	stacks_p = *stacks;
+	while (stacks_p->a->index != current_index)
+		rb(stacks);
+	pa(stacks);
+}
+
+void 	move_using_rrb(t_two_stacks **stacks, i32 current_index)
+{
+	t_two_stacks	*stacks_p;
+
+	stacks_p = *stacks;
+	while (stacks_p->b->index != current_index)
+		rrb(stacks_p);
+	pa(stacks);
+}
+
 i32		count_nodes(t_stack *stack)
 {
 	i32	i;
@@ -71,7 +91,7 @@ i32		count_nodes(t_stack *stack)
 
 	i = 0;
 	tmp = stack;
-	while (tmp)
+	while (tmp->next)
 	{
 		tmp = tmp->next;
 		++i;

@@ -21,14 +21,24 @@ int		main(int argc, char **argv)
 	stacks = stacks_init(NULL, NULL);
 	while (i > 0)
 	{
-		stacks->a = push(stacks->a, atoi(argv[i]), 0);
+		stacks->a = push(stacks->a, atoi(argv[i]), 0, 0);
 		--i;
 	}
-	//find_limits(stacks);
+	if (is_no_repited(stacks->a))
+	{
+		printf ("Here are some repeated elements in argements\n");
+		return (1);
+	}
 	make_index(stacks->a);
 	sort_distributor(&stacks);
-//	printf ("Here starts stack 'a'\n");
-//	while (stacks->a)
-//		printf("index: %d, value: %d\n", stacks->a->index, pop(&stacks->a));
+	/*printf ("Here starts stack 'a'\n");
+	while (stacks->a)
+		printf("index: %d, chank: %d value: %d\n", stacks->a->index,
+		 stacks->a->chank, pop(&stacks->a));
+	printf("\n\n\n");
+	printf ("Here starts stack 'b'\n");
+	while (stacks->b)
+		printf("index: %d, chank: %d value: %d\n", stacks->b->index,
+		 stacks->b->chank, pop(&stacks->b)); */
 	return (0);
 }

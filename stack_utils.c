@@ -11,10 +11,11 @@ t_stack		*new_stack(i32 value)
 	new->value = value;
 	new->length = 1;
 	new->index = 0;
+	new->chank = 0;
 	return (new);
 }
 
-t_stack		*push(t_stack *stack, i32 value, i32 index)
+t_stack		*push(t_stack *stack, i32 value, i32 index, i32 chank)
 {
 	t_stack	*new;
 	t_stack	*tmp;
@@ -23,12 +24,14 @@ t_stack		*push(t_stack *stack, i32 value, i32 index)
 	{
 		stack = new_stack(value);
 		stack->index = index;
+		stack->chank = chank;
 	}
 	else
 	{
 		new = new_stack(value); // handle possible errors
 		new->length = stack->length + 1;
 		new->index = index;
+		new->chank = chank;
 		tmp = stack;
 		stack = new;
 		stack->next = tmp;
@@ -107,14 +110,25 @@ void			find_limits_b(t_two_stacks *stacks)
 	}
 }
 
-i32		is_sorted(t_stack *a)
+i32		is_no_repited(t_stack *a)
 {
+	t_stack	*tmp;
+	t_stack	*save;
+
+	tmp = a;
+	save = a;
 	while (a->next)
 	{
-		if (a->value > a->next->value)
-			return (1);
+		tmp = a->next;
+		while (tmp)
+		{
+			if (tmp->value == a->value)
+				return (1);
+			tmp = tmp->next;
+		}
 		a = a->next;
 	}
+	a = save;
 	return (0);
 }
 
