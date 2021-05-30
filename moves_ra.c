@@ -11,7 +11,8 @@ void    	ra(t_two_stacks **stacks)
 	save = change->a->next;
 	tmp = new_stack(change->a->value);
 	tmp->index = change->a->index;
-	tmp->chank = change->a->chank;
+	tmp->chunk = change->a->chunk;
+	tmp->chunk_b = change->a->chunk_b;
 	to_free = change->a;
 	while (change->a->next)
 		change->a = change->a->next;
@@ -32,7 +33,8 @@ void    rb(t_two_stacks **stacks)
 	save = change->b->next;
 	tmp = new_stack(change->b->value);
 	tmp->index = change->b->index;
-	tmp->chank = change->b->chank;
+	tmp->chunk = change->b->chunk;
+	tmp->chunk_b = change->b->chunk_b;
 	to_free = change->b;
 	while (change->b->next)
 		change->b = change->b->next;

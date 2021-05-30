@@ -13,13 +13,13 @@ SRCS =	moves_pa.c \
 		indexing.c \
 		debug.c \
 		not_so_slow.c \
-		chank_sort.c
+		chunk_sort.c \
 
 OBJS =	$(SRCS:.c=.o)
 
 CC =	gcc
 
-FLAGS =	-g -Wall
+FLAGS =	-g -Wall -fsanitize=address
 
 .c.o:
 		$(CC) $(FLAGS) -c $< -o ${<:.c=.o}

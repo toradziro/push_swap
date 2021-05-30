@@ -35,18 +35,22 @@ void 	find_next_elem(t_two_stacks **stacks, i32 current_index)
 		++i;
 	}
 	if (i <= (stack_length / 2))
-		move_using_ra(stacks, current_index);
+		move_using_ra(stacks, current_index, 0);
 	else
-		move_using_rra(stacks, current_index);
+		move_using_rra(stacks, current_index, 0);
 }
 
-void 	move_using_ra(t_two_stacks **stacks, i32 current_index)
+void 	move_using_ra(t_two_stacks **stacks, i32 current_index, i32 chunk_b)
 {
 	t_two_stacks	*stacks_p;
 
 	stacks_p = *stacks;
-	while (stacks_p->a->index != current_index)
+	while (stacks_p->a)
+	{
+		if (stacks_p->a->index == current_index && stacks_p->a->chunk_b == chunk_b)
+			break ;
 		ra(stacks);
+	}
 	pb(stacks);
 }
 
@@ -54,13 +58,18 @@ void 	move_using_ra(t_two_stacks **stacks, i32 current_index)
  * Упаковать в указатели на функции
  */
 
-void 	move_using_rra(t_two_stacks **stacks, i32 current_index)
+void 	move_using_rra(t_two_stacks **stacks, i32 current_index, i32 chunk_b)
 {
 	t_two_stacks	*stacks_p;
 
 	stacks_p = *stacks;
-	while (stacks_p->a->index != current_index)
+	while (stacks_p->a)
+	{
+		if (stacks_p->a->index == current_index &&
+			stacks_p->a->chunk_b == chunk_b)
+			break;
 		rra(stacks_p);
+	}
 	pb(stacks);
 }
 
@@ -89,6 +98,8 @@ i32		count_nodes(t_stack *stack)
 	i32	i;
 	t_stack *tmp;
 
+	if (!stack)
+		return (0);
 	i = 0;
 	tmp = stack;
 	while (tmp->next)

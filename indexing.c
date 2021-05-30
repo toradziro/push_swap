@@ -1,24 +1,21 @@
 #include "push_swap.h"
 
-void		make_index(t_stack *stack)
+void		make_index(t_stack *stack, i32 len)
 {
 	i32		*arr;
 	i32		i;
 	i32		t;
-	i32		len;
 	t_stack	*tmp;
-
 	i = 0;
 	tmp = stack;
-	len = count_nodes(stack);
-	arr = (i32*)malloc(sizeof(i32) * len);
-	while (tmp)
+	arr = (i32*)malloc(sizeof(i32) * (len + 1));
+	while (i < len)
 	{
 		arr[i] = tmp->value;
 		tmp = tmp->next;
 		++i;
 	}
-	q_sort(arr, 0, len); // проверить len или len - 1
+	q_sort(arr, 0, len - 1); // проверить len или len - 1
 	t = 0;
 	tmp = stack;
 	while (tmp)
@@ -29,13 +26,14 @@ void		make_index(t_stack *stack)
 		{
 			if (tmp->value == arr[t])
 			{
-				tmp->index = t;
+				tmp->index = (t + 1);
 				break ;
 			}
 			++t;
 		}
 		tmp = tmp->next;
 	}
+	free(&arr[0]);
 }
 
 void		q_sort(i32 *num, i32 start, i32 end)

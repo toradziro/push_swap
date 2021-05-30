@@ -11,11 +11,12 @@ t_stack		*new_stack(i32 value)
 	new->value = value;
 	new->length = 1;
 	new->index = 0;
-	new->chank = 0;
+	new->chunk = 0;
+	new->chunk_b = 0;
 	return (new);
 }
 
-t_stack		*push(t_stack *stack, i32 value, i32 index, i32 chank)
+t_stack		*push(t_stack *stack, i32 value, i32 index, i32 chunk, i32 chunk_b)
 {
 	t_stack	*new;
 	t_stack	*tmp;
@@ -24,14 +25,16 @@ t_stack		*push(t_stack *stack, i32 value, i32 index, i32 chank)
 	{
 		stack = new_stack(value);
 		stack->index = index;
-		stack->chank = chank;
+		stack->chunk = chunk;
+		stack->chunk_b = chunk_b;
 	}
 	else
 	{
 		new = new_stack(value); // handle possible errors
 		new->length = stack->length + 1;
 		new->index = index;
-		new->chank = chank;
+		new->chunk = chunk;
+		new->chunk_b = chunk_b;
 		tmp = stack;
 		stack = new;
 		stack->next = tmp;

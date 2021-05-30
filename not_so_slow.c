@@ -8,10 +8,10 @@ void		sort_faster(t_two_stacks **stacks)
 	stacks_p = *stacks;
 	len = count_nodes(stacks_p->a);
 	division_by_partitions(stacks, len, 1);
-	chank_sort(stacks);
+	chunk_sort(stacks);
 }
 
-void		division_by_partitions(t_two_stacks **stacks, i32 len, i32 chank)
+void		division_by_partitions(t_two_stacks **stacks, i32 len, i32 chunk)
 {
 	t_two_stacks	*stacks_p;
 	i32				p;
@@ -24,35 +24,36 @@ void		division_by_partitions(t_two_stacks **stacks, i32 len, i32 chank)
 		return ;
 	}
 	p = find_partition(stacks_p->a);
-	restore_partied_elems(stacks, p, chank);
-	make_index(stacks_p->a);
-	division_by_partitions(stacks, count_nodes(stacks_p->a), (chank + 1));
+	restore_partied_elems(stacks, p, chunk);
+	make_index(stacks_p->a, count_nodes(stacks_p->a));
+	division_by_partitions(stacks, count_nodes(stacks_p->a), (chunk + 1));
 }
 
-void		restore_partied_elems(t_two_stacks **stacks, i32 p, i32 chank)
+void		restore_partied_elems(t_two_stacks **stacks, i32 p, i32 chunk)
 {
 	t_two_stacks	*stacks_p;
 
 	stacks_p = *stacks;
-	while (left_elems_less_p(stacks_p->a, p))
-		find_and_restore_closest(stacks_p, p, chank);
+	while (left_elems_less_p(stacks_p->a, p, 0))
+		find_and_restore_closest(stacks_p, p, chunk, 0);
 }
 
-i32		left_elems_less_p(t_stack *stack, i32 p)
+i32		left_elems_less_p(t_stack *stack, i32 p, i32 chunk_b)
 {
 	t_stack	*tmp;
 
 	tmp = stack;
 	while (tmp)
 	{
-		if (tmp->index <= p)
+		if (tmp->index <= p && tmp->chunk_b == chunk_b)
 			return (1);
 		tmp = tmp->next;
 	}
 	return (0);
 }
 
-void	find_and_restore_closest(t_two_stacks *stacks, i32 p, i32 chank)
+void	find_and_restore_closest(t_two_stacks *stacks, i32 p, i32 chunk, i32
+		chunk_b)
 {
 	t_stack		*tmp;
 	i32			len;
@@ -63,10 +64,10 @@ void	find_and_restore_closest(t_two_stacks *stacks, i32 p, i32 chank)
 	i = 0;
 	while (i < (len / 2))
 	{
-		if (tmp->index <= p)
+		if (tmp->index <= p && tmp->chunk_b == chunk_b)
 		{
-			tmp->chank = chank;
-			move_using_ra(&stacks, tmp->index);
+			tmp->chunk = chunk;
+			move_using_ra(&stacks, tmp->index, chunk_b);
 			return ;
 		}
 		tmp = tmp->next;
@@ -74,10 +75,10 @@ void	find_and_restore_closest(t_two_stacks *stacks, i32 p, i32 chank)
 	}
 	while (i < len)
 	{
-		if (tmp->index <= p)
+		if (tmp->index <= p && tmp->chunk_b == chunk_b)
 		{
-			tmp->chank = chank;
-			move_using_rra(&stacks, tmp->index);
+			tmp->chunk = chunk;
+			move_using_rra(&stacks, tmp->index, chunk_b);
 			return ;
 		}
 		tmp = tmp->next;

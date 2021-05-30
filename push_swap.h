@@ -17,7 +17,8 @@ typedef struct	s_stack {
 		i32		length;
 		i32		value;
 		i32		index;
-		i32		chank;
+		i32		chunk;
+		i32		chunk_b;
 }				t_stack;
 
 typedef struct	s_two_stacks {
@@ -31,7 +32,8 @@ typedef struct	s_two_stacks {
 //дописать остальные возможные действия
 
 t_stack			*new_stack(i32 value);
-t_stack			*push(t_stack *stack, i32 value, i32 index, i32 chank);
+t_stack			*push(t_stack *stack, i32 value, i32 index, i32 chunk, i32
+				chunk_b);
 i32				pop(t_stack **stack);
 t_two_stacks	*stacks_init(t_stack *a, t_stack *b);
 void			find_limits(t_two_stacks *stacks);
@@ -39,13 +41,15 @@ void			find_limits_b(t_two_stacks *stacks);
 i32				find_portion(i32 max_index, i32 current_index);
 void 			find_next_elem(t_two_stacks **stacks, i32 current_index);
 i32				count_nodes(t_stack *stack);
-void		 	move_using_ra(t_two_stacks **stacks, i32 current_index);
-void		 	move_using_rra(t_two_stacks **stacks, i32 current_index);
+void		 	move_using_ra(t_two_stacks **stacks, i32 current_index, i32
+				chunk_b);
+void		 	move_using_rra(t_two_stacks **stacks, i32 current_index, i32
+				chunk_b);
 void		 	move_using_rb(t_two_stacks **stacks, i32 current_index);
 void		 	move_using_rrb(t_two_stacks **stacks, i32 current_index);
 i32				find_biggest_index(t_stack *stack);
 
-void			make_index(t_stack *stack);
+void			make_index(t_stack *stack, i32 len);
 void			q_sort(i32 *num, i32 start, i32 end);
 //i32				parti(i32 *num, i32 start, i32 end);
 
@@ -73,20 +77,36 @@ void			sort_slow(t_two_stacks **stacks);
 
 i32				is_no_repited(t_stack *a);
 
-void			division_by_partitions(t_two_stacks **stacks, i32 len, i32 chank);
+void			division_by_partitions(t_two_stacks **stacks, i32 len, i32 chunk);
 i32				find_partition(t_stack *stack);
 i32				find_biggest_elem(t_stack *stack);
-void			restore_partied_elems(t_two_stacks **stacks, i32 p, i32 chank);
-i32				left_elems_less_p(t_stack *stack, i32 p);
+void			restore_partied_elems(t_two_stacks **stacks, i32 p, i32 chunk);
+i32				left_elems_less_p(t_stack *stack, i32 p, i32 chunk_b);
 void			find_and_restore_closest(t_two_stacks *stacks, i32 p, i32
-				chank);
+				chunk, i32 chunk_b);
 void			sort_faster(t_two_stacks **stacks);
-i32				find_max_in_chank(t_stack *stack, i32 chank);
-i32				left_chank_top(t_stack *stack, i32 chank);
-i32				left_chank_bottom(t_stack *stack, i32 chank);
+i32				find_max_in_chunk(t_stack *stack, i32 chunk);
+i32				left_chunk_top(t_stack *stack, i32 chunk);
+i32				left_chunk_bottom(t_stack *stack, i32 chunk);
 
 void			print_index(t_two_stacks *stacks);
-void			chank_sort(t_two_stacks **stacks);
-i32				chank_length(t_stack *stack, i32 chank);
+void			chunk_sort(t_two_stacks **stacks);
+i32				chunk_length(t_stack *stack, i32 chunk);
+void			chunk_partition(t_two_stacks **stacks, i32 chunk);
+void	 		div_chunk(t_two_stacks **stacks, i32 len, i32 chunk, i32 chunk_b);
+void			put_in_stack_a_chunk(t_two_stacks **stacks, i32 chunk);
+void			ret_to_b(t_two_stacks **stacks);
+i32				left_chunk_b_in_a(t_stack *a);
+void			back_to_top_b(t_two_stacks **stacks);
+i32				left_in_bottom_a(t_stack *a);
+i32				left_elems_more_p(t_stack *stack, i32 p, i32 chunk_b);
+void			find_and_restore_closest_b(t_two_stacks *stacks, i32 p, i32 chunk, i32
+chunk_b);
+
+i32				find_midpoint_b(t_stack *b, i32 chunk);
+i32				left_bigger_p(t_stack *b, i32 chunk, i32 p);
+void			replace_in_a(t_two_stacks **stacks, i32 mid, i32 chunk);
+void			replace_in_b(t_two_stacks **stacks, i32 mid, i32 chunk);
+i32				left_less_p_ch(t_stack *b, i32 chunk, i32 p);
 
 #endif
