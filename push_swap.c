@@ -31,7 +31,7 @@ int		main(int argc, char **argv)
 	}
 	make_index(stacks->a, count_nodes(stacks->a));
 	sort_distributor(&stacks);
-	printf ("Here starts stack 'a'\n");
+/*	printf ("Here starts stack 'a'\n");
 	while (stacks->a)
 		printf("index: %d, chunk: %d value: %d\n", stacks->a->index,
 		 stacks->a->chunk, pop(&stacks->a));
@@ -39,6 +39,6 @@ int		main(int argc, char **argv)
 	printf ("Here starts stack 'b'\n");
 	while (stacks->b)
 		printf("index: %d, chunk: %d value: %d\n", stacks->b->index,
-		 stacks->b->chunk, pop(&stacks->b));
+		 stacks->b->chunk, pop(&stacks->b)); */
 	return (0);
 }

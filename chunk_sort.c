@@ -1,27 +1,13 @@
 #include "push_swap.h"
-/*
- * переписать, посчитать количество смещений вниз, после чего восстановить
- * применять мидпоинт до тех пор, пока в текущем чанке не останется 2 элемента
- *
- * перекинули большую половину чанка в А
- * из А перекинули меньшую половину опять в Б, пока не осталось всего 2
- * элемента, свапнули их, если нужно и вернулись опять в Б
- *
- * повторили до тех пор, пока Б не закончился
- */
+
 void		chunk_sort(t_two_stacks **stacks)
 {
-	while (chunk_length((*stacks)->b, (*stacks)->b->chunk))
+	while ((*stacks)->b && chunk_length((*stacks)->b, (*stacks)->b->chunk))
 	{
-		if (count_nodes((*stacks)->b) == 2 && (*stacks)->b->value < (*stacks)->b->next->value)
-		{
-			sb((*stacks));
-			pa(stacks);
-		}
 		if (count_nodes((*stacks)->b) == 1)
 		{
 			pa(stacks);
-			break;
+			break ;
 		}
 		recursively_divide_chunk_b(stacks, (*stacks)->b->chunk);
 		recursively_divide_chunk_a(stacks, (*stacks)->a->chunk);
@@ -34,25 +20,25 @@ void 		recursively_divide_chunk_b(t_two_stacks **stacks, i32 chunk)
 	i32		len;
 
 	len = chunk_length((*stacks)->b, chunk);
-	while (len > 2)
-	{
-		p = len / 2;//(len % 2 == 0) ? (len / 2) : ((len + 1) / 2);
-		if (left_bigger_p((*stacks)->b, chunk, p))
-		{
-			replace_in_a(stacks, p, chunk);
-		}
-		len = chunk_length((*stacks)->b, chunk);
-	}
+	p = len / 2;
+	make_index((*stacks)->b, len);
+	while (left_bigger_p((*stacks)->b, chunk, p))
+		replace_in_a(stacks, p, chunk);
+	len = chunk_length((*stacks)->b, chunk);
 	if (len <= 2)
 	{
 		if (len == 2)
 		{
+			if ((*stacks)->b->value < (*stacks)->b->next->value)
+				sb((*stacks));
 			pa(stacks);
 			pa(stacks);
 		}
 		if (len == 1)
 			pa(stacks);
+		return ;
 	}
+	recursively_divide_chunk_b(stacks, chunk);
 }
 
 void 		recursively_divide_chunk_a(t_two_stacks **stacks, i32 chunk)
@@ -61,27 +47,35 @@ void 		recursively_divide_chunk_a(t_two_stacks **stacks, i32 chunk)
 	i32		p;
 
 	len = chunk_length((*stacks)->a, chunk);
-	while (len > 2)
+	p = len / 2;
+	make_index((*stacks)->a, len);
+	while (left_less_p_ch((*stacks)->a, chunk, p))
 	{
-		p = (len % 2 == 0) ? (len / 2) : ((len + 1) / 2);
-		if (left_less_p_ch((*stacks)->a, chunk, p))
-			replace_in_b(stacks, p, chunk);
-		else
-			break ;
-		len = chunk_length((*stacks)->a, chunk);
+		replace_in_b(stacks, p, chunk);
 	}
-	if (len == 2 && (*stacks)->a->value > (*stacks)->a->next->value)
-		sa((*stacks));
+	len = chunk_length((*stacks)->a, chunk);
+	if (len <= 2)
+	{
+		if (len == 2 && (*stacks)->a->value > (*stacks)->a->next->value)
+			sa(*stacks);
+//		if (len == 1)
+//			--(*stacks)->a->chunk;
+		return ;
+	}
+	recursively_divide_chunk_a(stacks, chunk);
 }
+
 
 i32			left_less_p_ch(t_stack *a, i32 chunk, i32 p)
 {
 	t_stack	*tmp;
+	i32		chunk_b;
 
 	if (!a)
 		return (0);
 	tmp = a;
-	while (tmp && tmp->chunk == chunk)
+	chunk_b = a->chunk_b;
+	while (tmp && tmp->chunk == chunk && tmp->chunk_b == chunk_b)
 	{
 		if (tmp->index <= p)
 		{
@@ -96,14 +90,16 @@ void		replace_in_b(t_two_stacks **stacks, i32 mid, i32 chunk)
 {
 	i32		index;
 	i32		counter;
+	i32		chunk_b;
 	t_stack	*tmp;
 	t_stack	*cont;
 
 	counter = 0;
 	tmp = (*stacks)->a;
+	chunk_b = tmp->chunk_b;
 	cont = tmp;
 	index = left_less_p_ch(tmp, chunk, mid);
-	while (tmp->chunk == chunk)
+	while (tmp->chunk == chunk && tmp->chunk_b == chunk_b)
 	{
 		if (tmp->index == index)
 		{
@@ -162,11 +158,13 @@ void		replace_in_a(t_two_stacks **stacks, i32 mid, i32 chunk)
 i32			left_bigger_p(t_stack *b, i32 chunk, i32 p)
 {
 	t_stack	*tmp;
+	i32		chunk_b;
 
 	if (!b)
 		return (0);
 	tmp = b;
-	while (tmp && tmp->chunk == chunk)
+	chunk_b = tmp->chunk_b;
+	while (tmp && tmp->chunk == chunk && tmp->chunk_b == chunk_b)
 	{
 		if (tmp->index > p)
 			return (tmp->index);
@@ -179,12 +177,14 @@ i32			chunk_length(t_stack *stack, i32 chunk)
 {
 	t_stack	*tmp;
 	i32		len;
+	i32		chunk_b;
 
 	if (!stack || stack->chunk != chunk)
 		return (0);
 	len = 0;
 	tmp = stack;
-	while (tmp && tmp->chunk == chunk)
+	chunk_b = tmp->chunk_b;
+	while (tmp && tmp->chunk == chunk && tmp->chunk_b == chunk_b)
 	{
 		++len;
 		tmp = tmp->next;
