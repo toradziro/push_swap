@@ -111,5 +111,9 @@ i32				left_less_p_ch(t_stack *b, i32 chunk, i32 p);
 void	 		recursively_divide_chunk_b(t_two_stacks **stacks, i32 chunk);
 void 			recursively_divide_chunk_a(t_two_stacks **stacks, i32 chunk);
 void			replace_in_b(t_two_stacks **stacks, i32 mid, i32 chunk);
+void			sort_through(t_two_stacks **stacks);
+i32				find_next_index(t_stack *stack, i32 chunk);
+void		 	replace_in_elem_a(t_two_stacks **stacks, i32 index);
+void	 		hard_reput_in_a(t_two_stacks **stacks, i32 chunk);
 
 #endif

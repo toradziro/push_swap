@@ -9,11 +9,86 @@ void		chunk_sort(t_two_stacks **stacks)
 			pa(stacks);
 			break ;
 		}
-		recursively_divide_chunk_b(stacks, (*stacks)->b->chunk);
-		recursively_divide_chunk_a(stacks, (*stacks)->a->chunk);
+		if (chunk_length((*stacks)->b, (*stacks)->b->chunk) <= 30)
+		{
+			make_index((*stacks)->b, chunk_length((*stacks)->b, (*stacks)
+			->b->chunk));
+			sort_through(stacks);
+		}
+		else
+		{
+			hard_reput_in_a(stacks, (*stacks)->b->chunk);
+			//recursively_divide_chunk_b(stacks, (*stacks)->b->chunk);
+			recursively_divide_chunk_a(stacks, (*stacks)->a->chunk);
+		}
 	}
 }
 
+void 		hard_reput_in_a(t_two_stacks **stacks, i32 chunk)
+{
+	while ((*stacks)->b && (*stacks)->b->chunk == chunk)
+		pa(stacks);
+}
+
+void		sort_through(t_two_stacks **stacks)
+{
+	i32		chunk;
+	i32		index;
+
+	chunk = (*stacks)->b->chunk;
+	while (chunk_length((*stacks)->b, chunk) > 0)
+	{
+		index = find_next_index((*stacks)->b, chunk);
+		replace_in_elem_a(stacks, index);
+	}
+}
+
+i32			find_next_index(t_stack *stack, i32 chunk)
+{
+	t_stack	*tmp;
+	i32		max;
+
+	tmp = stack;
+	max = 0;
+	while (tmp && tmp->chunk == chunk)
+	{
+		if (tmp->index > max)
+			max = tmp->index;
+		tmp = tmp->next;
+	}
+	return (max);
+}
+
+void 	replace_in_elem_a(t_two_stacks **stacks, i32 index)
+{
+	i32 	counter;
+	t_stack *tmp;
+	t_stack	*keep;
+	i32		chunk;
+
+	counter = 0;
+	tmp = (*stacks)->b;
+	keep = tmp;
+	chunk = (*stacks)->b->chunk;
+	while (tmp && tmp->chunk == chunk)
+	{
+		if (tmp->index == index)
+		{
+			tmp->chunk = 0;
+			pa(stacks);
+			break ;
+		}
+		tmp = tmp->next;
+		rb(stacks);
+		++counter;
+	}
+	while (counter > 0)
+	{
+		rrb((*stacks));
+		--counter;
+	}
+	tmp = keep;
+}
 void 		recursively_divide_chunk_b(t_two_stacks **stacks, i32 chunk)
 {
 	i32		p;
@@ -58,8 +133,6 @@ void 		recursively_divide_chunk_a(t_two_stacks **stacks, i32 chunk)
 	{
 		if (len == 2 && (*stacks)->a->value > (*stacks)->a->next->value)
 			sa(*stacks);
-//		if (len == 1)
-//			--(*stacks)->a->chunk;
 		return ;
 	}
 	recursively_divide_chunk_a(stacks, chunk);
@@ -103,7 +176,7 @@ void		replace_in_b(t_two_stacks **stacks, i32 mid, i32 chunk)
 	{
 		if (tmp->index == index)
 		{
-			++tmp->chunk;
+			tmp->chunk += 10;
 			pb(stacks);
 			break ;
 		}
