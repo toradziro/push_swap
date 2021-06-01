@@ -9,7 +9,7 @@ void		chunk_sort(t_two_stacks **stacks)
 			pa(stacks);
 			break ;
 		}
-		if (chunk_length((*stacks)->b, (*stacks)->b->chunk) <= 30)
+		if (chunk_length((*stacks)->b, (*stacks)->b->chunk) <= 10)
 		{
 			make_index((*stacks)->b, chunk_length((*stacks)->b, (*stacks)
 			->b->chunk));
@@ -17,9 +17,10 @@ void		chunk_sort(t_two_stacks **stacks)
 		}
 		else
 		{
-			hard_reput_in_a(stacks, (*stacks)->b->chunk);
-			//recursively_divide_chunk_b(stacks, (*stacks)->b->chunk);
-			recursively_divide_chunk_a(stacks, (*stacks)->a->chunk);
+			recursively_divide_chunk_b(stacks, (*stacks)->b->chunk);
+			make_index((*stacks)->a, chunk_length((*stacks)->a, (*stacks)
+			->a->chunk));
+			recursively_divide_chunk_a(stacks, (*stacks)->a->chunk, 1);
 		}
 	}
 }
@@ -63,12 +64,10 @@ void 	replace_in_elem_a(t_two_stacks **stacks, i32 index)
 {
 	i32 	counter;
 	t_stack *tmp;
-	t_stack	*keep;
 	i32		chunk;
 
 	counter = 0;
 	tmp = (*stacks)->b;
-	keep = tmp;
 	chunk = (*stacks)->b->chunk;
 	while (tmp && tmp->chunk == chunk)
 	{
@@ -87,7 +86,6 @@ void 	replace_in_elem_a(t_two_stacks **stacks, i32 index)
 		rrb((*stacks));
 		--counter;
 	}
-	tmp = keep;
 }
 void 		recursively_divide_chunk_b(t_two_stacks **stacks, i32 chunk)
 {
@@ -113,10 +111,10 @@ void 		recursively_divide_chunk_b(t_two_stacks **stacks, i32 chunk)
 			pa(stacks);
 		return ;
 	}
-	recursively_divide_chunk_b(stacks, chunk);
 }
 
-void 		recursively_divide_chunk_a(t_two_stacks **stacks, i32 chunk)
+void 		recursively_divide_chunk_a(t_two_stacks **stacks, i32 chunk,
+								  		i32 inc)
 {
 	i32		len;
 	i32		p;
@@ -125,9 +123,7 @@ void 		recursively_divide_chunk_a(t_two_stacks **stacks, i32 chunk)
 	p = len / 2;
 	make_index((*stacks)->a, len);
 	while (left_less_p_ch((*stacks)->a, chunk, p))
-	{
-		replace_in_b(stacks, p, chunk);
-	}
+		replace_in_b(stacks, p, chunk, inc);
 	len = chunk_length((*stacks)->a, chunk);
 	if (len <= 2)
 	{
@@ -135,7 +131,7 @@ void 		recursively_divide_chunk_a(t_two_stacks **stacks, i32 chunk)
 			sa(*stacks);
 		return ;
 	}
-	recursively_divide_chunk_a(stacks, chunk);
+	recursively_divide_chunk_a(stacks, chunk, ++inc);
 }
 
 
@@ -151,80 +147,66 @@ i32			left_less_p_ch(t_stack *a, i32 chunk, i32 p)
 	while (tmp && tmp->chunk == chunk && tmp->chunk_b == chunk_b)
 	{
 		if (tmp->index <= p)
-		{
-			return (tmp->index);
-		}
+			return (1);
 		tmp = tmp->next;
 	}
 	return (0);
 }
 
-void		replace_in_b(t_two_stacks **stacks, i32 mid, i32 chunk)
+void		replace_in_b(t_two_stacks **stacks, i32 mid, i32 chunk, i32 inc)
 {
-	i32		index;
 	i32		counter;
-	i32		chunk_b;
-	t_stack	*tmp;
-	t_stack	*cont;
+	i32		len;
 
 	counter = 0;
-	tmp = (*stacks)->a;
-	chunk_b = tmp->chunk_b;
-	cont = tmp;
-	index = left_less_p_ch(tmp, chunk, mid);
-	while (tmp->chunk == chunk && tmp->chunk_b == chunk_b)
+	len = chunk_length((*stacks)->a, chunk);
+	while ((*stacks)->a->chunk == chunk && counter < len)
 	{
-		if (tmp->index == index)
+		if ((*stacks)->a->index <= mid)
 		{
-			tmp->chunk += 10;
+			(*stacks)->a->chunk += inc;
 			pb(stacks);
-			break ;
+			continue ;
 		}
-		tmp = tmp->next;
 		ra(stacks);
 		++counter;
 	}
 	while (counter > 0)
 	{
+		if ((*stacks)->a->index <= mid && (*stacks)->a->chunk == chunk)
+		{
+			(*stacks)->a->chunk += inc;
+			pb(stacks);
+		}
 		rra((*stacks));
 		--counter;
 	}
-	tmp = cont;
 }
-
-//i32			find_midpoint_b(t_stack *b, i32 chunk)
-//{
-//}
-
 
 void		replace_in_a(t_two_stacks **stacks, i32 mid, i32 chunk)
 {
-	i32		index;
 	i32		counter;
-	t_stack	*tmp;
-	t_stack	*cont;
+	i32		len;
 
 	counter = 0;
-	tmp = (*stacks)->b;
-	cont = tmp;
-	index = left_bigger_p(tmp, chunk, mid);
-	while (tmp && tmp->chunk == chunk)
+	len = chunk_length((*stacks)->b, chunk);
+	while ((*stacks)->b && (*stacks)->b->chunk == chunk && counter < len)
 	{
-		if (tmp->index == index)
+		if ((*stacks)->b->index >= mid)
 		{
 			pa(stacks);
-			break ;
+			continue ;
 		}
-		tmp = tmp->next;
 		rb(stacks);
 		++counter;
 	}
 	while (counter > 0)
 	{
+		if ((*stacks)->b->index >= mid && (*stacks)->b->chunk == chunk)
+			pa(stacks);
 		rrb((*stacks));
 		--counter;
 	}
-	tmp = cont;
 }
 
 
@@ -240,7 +222,7 @@ i32			left_bigger_p(t_stack *b, i32 chunk, i32 p)
 	while (tmp && tmp->chunk == chunk && tmp->chunk_b == chunk_b)
 	{
 		if (tmp->index > p)
-			return (tmp->index);
+			return (1);
 		tmp = tmp->next;
 	}
 	return (0);
