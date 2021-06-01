@@ -7,6 +7,7 @@ void		sort_faster(t_two_stacks **stacks)
 
 	stacks_p = *stacks;
 	len = count_nodes(stacks_p->a);
+//	recursively_divide_chunk_a(stacks, 0, 1);
 	division_by_partitions(stacks, len, 1);
 	chunk_sort(stacks);
 }
@@ -110,3 +111,33 @@ i32			find_biggest_elem(t_stack *stack)
 	stack = tmp;
 	return (max);
 }
+
+/*t_stack		*tmp;
+i32			len;
+i32			i;
+
+tmp = stacks->a;
+len = count_nodes(stacks->a);
+i = 0;
+while (i < (len / 2))
+{
+	if (tmp->index <= p && tmp->chunk_b == chunk_b)
+	{
+		tmp->chunk = chunk;
+		move_using_ra(&stacks, tmp->index, chunk_b);
+		return ;
+	}
+	tmp = tmp->next;
+	++i;
+}
+while (i < len)
+{
+	if (tmp->index <= p && tmp->chunk_b == chunk_b)
+	{
+		tmp->chunk = chunk;
+		move_using_rra(&stacks, tmp->index, chunk_b);
+		return ;
+	}
+	tmp = tmp->next;
+	++i;
+}*/

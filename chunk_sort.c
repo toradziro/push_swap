@@ -25,12 +25,6 @@ void		chunk_sort(t_two_stacks **stacks)
 	}
 }
 
-void 		hard_reput_in_a(t_two_stacks **stacks, i32 chunk)
-{
-	while ((*stacks)->b && (*stacks)->b->chunk == chunk)
-		pa(stacks);
-}
-
 void		sort_through(t_two_stacks **stacks)
 {
 	i32		chunk;
@@ -160,7 +154,8 @@ void		replace_in_b(t_two_stacks **stacks, i32 mid, i32 chunk, i32 inc)
 
 	counter = 0;
 	len = chunk_length((*stacks)->a, chunk);
-	while ((*stacks)->a->chunk == chunk && counter < len)
+	while ((*stacks)->a->chunk == chunk && counter < len && left_less_p_ch(
+			(*stacks)->a, chunk, mid))
 	{
 		if ((*stacks)->a->index <= mid)
 		{
@@ -190,7 +185,7 @@ void		replace_in_a(t_two_stacks **stacks, i32 mid, i32 chunk)
 
 	counter = 0;
 	len = chunk_length((*stacks)->b, chunk);
-	while ((*stacks)->b && (*stacks)->b->chunk == chunk && counter < len)
+	while ((*stacks)->b && (*stacks)->b->chunk == chunk && counter < len) //&&left_bigger_p((*stacks)->b, chunk, mid)
 	{
 		if ((*stacks)->b->index >= mid)
 		{
@@ -200,6 +195,8 @@ void		replace_in_a(t_two_stacks **stacks, i32 mid, i32 chunk)
 		rb(stacks);
 		++counter;
 	}
+	if (count_nodes((*stacks)->b) == chunk_length((*stacks)->b, chunk))
+		return ;
 	while (counter > 0)
 	{
 		if ((*stacks)->b->index >= mid && (*stacks)->b->chunk == chunk)
@@ -246,15 +243,3 @@ i32			chunk_length(t_stack *stack, i32 chunk)
 	}
 	return (len);
 }
-
-//i32			left_chunk_top(t_stack *stack, i32 chunk)
-//{
-//}
-//
-//i32			left_chunk_bottom(t_stack *stack, i32 chunk)
-//{
-//}
-//
-//i32			find_max_in_chunk(t_stack *stack, i32 chunk)
-//{
-//}
