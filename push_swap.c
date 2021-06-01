@@ -21,7 +21,13 @@ int		main(int argc, char **argv)
 	stacks = stacks_init(NULL, NULL);
 	while (i > 0)
 	{
-		stacks->a = push(stacks->a, atoi(argv[i]), 0, 0, 0);
+		if (!try_parse(argv[i]))
+			stacks->a = push(stacks->a, atoi(argv[i]), 0, 0, 0);
+		else
+		{
+			printf("u gave invalid arguments\n");
+			return (1);
+		}
 		--i;
 	}
 	if (is_no_repited(stacks->a))
@@ -40,5 +46,19 @@ int		main(int argc, char **argv)
 	while (stacks->b)
 		printf("index: %d, chunk: %d value: %d\n", stacks->b->index,
 		 stacks->b->chunk, pop(&stacks->b)); */
+	return (0);
+}
+
+i32			try_parse(char *str)
+{
+	i32		i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] > '9' || str[i] < '0')
+			return (1);
+		++i;
+	}
 	return (0);
 }

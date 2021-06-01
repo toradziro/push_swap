@@ -4,11 +4,6 @@ void		chunk_sort(t_two_stacks **stacks)
 {
 	while ((*stacks)->b && chunk_length((*stacks)->b, (*stacks)->b->chunk))
 	{
-		if (count_nodes((*stacks)->b) == 1)
-		{
-			pa(stacks);
-			break ;
-		}
 		if (chunk_length((*stacks)->b, (*stacks)->b->chunk) <= 10)
 		{
 			make_index((*stacks)->b, chunk_length((*stacks)->b, (*stacks)
@@ -75,6 +70,8 @@ void 	replace_in_elem_a(t_two_stacks **stacks, i32 index)
 		rb(stacks);
 		++counter;
 	}
+	if (count_nodes((*stacks)->b) == chunk_length((*stacks)->b, chunk))
+		return ;
 	while (counter > 0)
 	{
 		rrb((*stacks));
@@ -185,7 +182,8 @@ void		replace_in_a(t_two_stacks **stacks, i32 mid, i32 chunk)
 
 	counter = 0;
 	len = chunk_length((*stacks)->b, chunk);
-	while ((*stacks)->b && (*stacks)->b->chunk == chunk && counter < len) //&&left_bigger_p((*stacks)->b, chunk, mid)
+	while ((*stacks)->b && (*stacks)->b->chunk == chunk && counter < len
+	&& left_bigger_p((*stacks)->b, chunk, mid))
 	{
 		if ((*stacks)->b->index >= mid)
 		{

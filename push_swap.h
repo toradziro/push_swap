@@ -117,5 +117,6 @@ void			sort_through(t_two_stacks **stacks);
 i32				find_next_index(t_stack *stack, i32 chunk);
 void		 	replace_in_elem_a(t_two_stacks **stacks, i32 index);
 void	 		hard_reput_in_a(t_two_stacks **stacks, i32 chunk);
+i32				try_parse(char *str);
 
 #endif
