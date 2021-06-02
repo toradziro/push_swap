@@ -1,14 +1,14 @@
 #include "push_swap.h"
 
-void		make_index(t_stack *stack, i32 len, t_two_stacks **stacks)
+void	make_index(t_stack *stack, int32_t len, t_two_stacks **stacks)
 {
-	i32		*arr;
-	i32		i;
-	i32		t;
+	int32_t	*arr;
+	int32_t	i;
 	t_stack	*tmp;
+
 	i = 0;
 	tmp = stack;
-	arr = (i32*)malloc(sizeof(i32) * (len + 1));
+	arr = (int32_t *)malloc(sizeof(int32_t) * (len + 1));
 	if (!arr)
 		error_handle(stacks);
 	while (i < len)
@@ -17,7 +17,32 @@ void		make_index(t_stack *stack, i32 len, t_two_stacks **stacks)
 		tmp = tmp->next;
 		++i;
 	}
-	q_sort(arr, 0, len - 1); // проверить len или len - 1
+	q_sort(arr, 0, len - 1);
+	finish_indexing(stack, arr, len);
+}
+
+void	q_sort(int32_t *num, int32_t start, int32_t end)
+{
+	int32_t	p;
+	int32_t	i;
+	int32_t	j;
+
+	if (start < end)
+	{
+		i = start;
+		j = end;
+		p = num[(i + j) / 2];
+		q_sort_main_loop(num, &i, &j, p);
+		q_sort(num, start, j);
+		q_sort(num, i, end);
+	}
+}
+
+void	finish_indexing(t_stack *stack, int32_t *arr, int32_t len)
+{
+	int32_t	t;
+	t_stack	*tmp;
+
 	t = 0;
 	tmp = stack;
 	while (tmp)
@@ -38,34 +63,23 @@ void		make_index(t_stack *stack, i32 len, t_two_stacks **stacks)
 	free(&arr[0]);
 }
 
-void		q_sort(i32 *num, i32 start, i32 end)
+void	q_sort_main_loop(int32_t *num, int32_t *i, int32_t *j, int32_t p)
 {
-	i32		p;
-	i32		i;
-	i32		j;
-	i32		tmp;
+	int32_t	tmp;
 
-	if (start < end)
+	while (*i <= *j)
 	{
-		i = start;
-		j = end;
-		p = num[(i + j) / 2];
-		while (i <= j)
+		while (num[*i] < p)
+			++*i;
+		while (num[*j] > p)
+			--*j;
+		if (*i <= *j)
 		{
-			while (num[i] < p)
-				++i;
-			while (num[j] > p)
-				--j;
-			if (i <= j)
-			{
-				tmp = num[i];
-				num[i] = num[j];
-				num[j] = tmp;
-				++i;
-				--j;
-			}
+			tmp = *(num + *i);
+			*(num + *i) = *(num + *j);
+			*(num + *j) = tmp;
+			++*i;
+			--*j;
 		}
-		q_sort(num, start, j);
-		q_sort(num, i, end);
 	}
 }

@@ -11,15 +11,21 @@ SRCS =	moves_pa.c \
 		five_elems_case.c \
 		other_amounts.c \
 		indexing.c \
-		debug.c \
 		not_so_slow.c \
 		chunk_sort.c \
+		parse_line.c \
+		chunk_sort_utils.c \
+		recursively_division.c \
+		sort_through.c \
+		not_so_slow_utils.c
 
 OBJS =	$(SRCS:.c=.o)
 
+SRC_D =	$(SRCS:.c=.d)
+
 CC =	gcc
 
-FLAGS =	-g -Wall -fsanitize=address
+FLAGS =	-g -MMD -Wall -fsanitize=address
 
 .c.o:
 		$(CC) $(FLAGS) -c $< -o ${<:.c=.o}
@@ -32,6 +38,7 @@ all:	$(NAME)
 
 clean:
 		rm -f $(OBJS)
+		rm -f $(SRC_D)
 		@echo "Object files were deleted"
 
 fclean:	clean
@@ -40,4 +47,5 @@ fclean:	clean
 
 re:		fclean all
 
+-include $(SRC_D)
 #.SILENT:

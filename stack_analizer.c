@@ -1,16 +1,11 @@
 #include "push_swap.h"
 
-/*
- * добавить проверку на одно значение
- * добавить свап двух элементов
- * добавить проверку на отсортированность стека
- */
-
 void	sort_distributor(t_two_stacks **stacks)
 {
 	t_two_stacks	*stacks_p;
 
 	stacks_p = *stacks;
+	make_index(stacks_p->a, count_nodes(stacks_p->a), stacks);
 	if (!is_sorted((*stacks)->a))
 	{
 		free_stacks(stacks);

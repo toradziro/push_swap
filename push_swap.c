@@ -1,9 +1,9 @@
 #include "push_swap.h"
 
-int		main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_two_stacks	*stacks;
-	i32				i;
+	int32_t			i;
 
 	i = argc - 1;
 	if (argc == 1)
@@ -11,24 +11,25 @@ int		main(int argc, char **argv)
 	stacks = stacks_init(NULL, NULL);
 	if (!stacks)
 		error_handle(&stacks);
-	while (i > 0)
+	if (argc == 2)
+		parse_line(argv[1], &stacks);
+	else
 	{
-		try_parse(argv[i], &stacks);
-		--i;
+		while (i > 0)
+		{
+			try_parse(argv[i], &stacks);
+			--i;
+		}
 	}
 	if (is_no_repited(stacks->a))
-	{
 		error_handle(&stacks);
-		return (1);
-	}
-	make_index(stacks->a, count_nodes(stacks->a), &stacks);
 	sort_distributor(&stacks);
 	return (0);
 }
 
-void			try_parse(char *str, t_two_stacks **stacks)
+void	try_parse(char *str, t_two_stacks **stacks)
 {
-	i32			i;
+	int32_t		i;
 	int64_t		res;
 
 	i = 0;
@@ -43,22 +44,22 @@ void			try_parse(char *str, t_two_stacks **stacks)
 			error_handle(stacks);
 		++i;
 	}
-	res = atol(&str[0]);
+	res = (int64_t)atol(&str[0]);
 	if (res > I_32_MAX || res < I_32_MIN)
 		error_handle(stacks);
-	(*stacks)->a = push((*stacks)->a, res, 0, 0, 0);
+	(*stacks)->a = push((*stacks)->a, (int32_t)res, 0, 0);
 }
 
-void		error_handle(t_two_stacks **stacks)
+void	error_handle(t_two_stacks **stacks)
 {
 	write(2, "Error\n", 6);
 	free_stacks(stacks);
 	exit(1);
 }
 
-void		free_stacks(t_two_stacks **stacks)
+void	free_stacks(t_two_stacks **stacks)
 {
-	i32		for_free;
+	int32_t		for_free;
 
 	while ((*stacks)->a)
 		for_free = pop(&((*stacks)->a));
@@ -66,7 +67,7 @@ void		free_stacks(t_two_stacks **stacks)
 		for_free = pop(&((*stacks)->a));
 }
 
-i32			is_sorted(t_stack *a)
+int32_t	is_sorted(t_stack *a)
 {
 	t_stack	*tmp;
 

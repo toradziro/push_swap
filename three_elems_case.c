@@ -3,9 +3,9 @@
 void	three_elems_case(t_two_stacks **stacks)
 {
 	t_two_stacks	*stacks_p;
-	i32				one;
-	i32				two;
-	i32				three;
+	int32_t			one;
+	int32_t			two;
+	int32_t			three;
 
 	stacks_p = *stacks;
 	one = stacks_p->a->value;
