@@ -1,6 +1,6 @@
 #include "push_swap.h"
 
-void		make_index(t_stack *stack, i32 len)
+void		make_index(t_stack *stack, i32 len, t_two_stacks **stacks)
 {
 	i32		*arr;
 	i32		i;
@@ -9,6 +9,8 @@ void		make_index(t_stack *stack, i32 len)
 	i = 0;
 	tmp = stack;
 	arr = (i32*)malloc(sizeof(i32) * (len + 1));
+	if (!arr)
+		error_handle(stacks);
 	while (i < len)
 	{
 		arr[i] = tmp->value;

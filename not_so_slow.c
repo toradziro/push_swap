@@ -25,7 +25,7 @@ void		division_by_partitions(t_two_stacks **stacks, i32 len, i32 chunk)
 	}
 	p = find_partition(stacks_p->a);
 	restore_partied_elems(stacks, p, chunk);
-	make_index(stacks_p->a, count_nodes(stacks_p->a));
+	make_index(stacks_p->a, count_nodes(stacks_p->a), stacks);
 	division_by_partitions(stacks, count_nodes(stacks_p->a), (chunk + 1));
 }
 

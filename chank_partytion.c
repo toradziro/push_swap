@@ -10,11 +10,6 @@ void		chunk_partition(t_two_stacks **stacks, i32 chunk)
 	put_in_stack_a_chunk(stacks, chunk);
 	div_chunk(stacks, len, chunk, 1);
 	ret_to_b(stacks);
-//	while (stacks_p->a)
-//	{
-//		printf("%d\n", stacks_p->a->chunk_b);
-//		stacks_p->a = stacks_p->a->next;
-//	}
 }
 
 void	ret_to_b(t_two_stacks **stacks)

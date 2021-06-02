@@ -1,12 +1,12 @@
 #include "push_swap.h"
 
-t_stack		*new_stack(i32 value)
+t_stack		*new_stack(i32 value, t_two_stacks **stacks)
 {
 	t_stack	*new;
 
 	new = (t_stack*)malloc(sizeof(t_stack));
 	if (!new)
-		return (NULL);
+		error_handle(stacks);
 	new->next = NULL;
 	new->value = value;
 	new->length = 1;
@@ -23,14 +23,14 @@ t_stack		*push(t_stack *stack, i32 value, i32 index, i32 chunk, i32 chunk_b)
 
 	if (!stack)
 	{
-		stack = new_stack(value);
+		stack = new_stack(value, NULL);
 		stack->index = index;
 		stack->chunk = chunk;
 		stack->chunk_b = chunk_b;
 	}
 	else
 	{
-		new = new_stack(value); // handle possible errors
+		new = new_stack(value, NULL);
 		new->length = stack->length + 1;
 		new->index = index;
 		new->chunk = chunk;
@@ -134,7 +134,3 @@ i32		is_no_repited(t_stack *a)
 	a = save;
 	return (0);
 }
-
-//void		error_exit(i32 code)
-//{
-//}

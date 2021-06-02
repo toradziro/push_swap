@@ -9,7 +9,7 @@ void    	ra(t_two_stacks **stacks)
 
 	change = *stacks;
 	save = change->a->next;
-	tmp = new_stack(change->a->value);
+	tmp = new_stack(change->a->value, stacks);
 	tmp->index = change->a->index;
 	tmp->chunk = change->a->chunk;
 	tmp->chunk_b = change->a->chunk_b;
@@ -31,7 +31,7 @@ void    rb(t_two_stacks **stacks)
 
 	change = *stacks;
 	save = change->b->next;
-	tmp = new_stack(change->b->value);
+	tmp = new_stack(change->b->value, stacks);
 	tmp->index = change->b->index;
 	tmp->chunk = change->b->chunk;
 	tmp->chunk_b = change->b->chunk_b;

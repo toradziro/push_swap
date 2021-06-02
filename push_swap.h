@@ -29,9 +29,7 @@ typedef struct	s_two_stacks {
 		i32		len_b;
 }				t_two_stacks;
 
-//дописать остальные возможные действия
-
-t_stack			*new_stack(i32 value);
+t_stack			*new_stack(i32 value, t_two_stacks **stacks);
 t_stack			*push(t_stack *stack, i32 value, i32 index, i32 chunk, i32
 				chunk_b);
 i32				pop(t_stack **stack);
@@ -49,9 +47,8 @@ void		 	move_using_rb(t_two_stacks **stacks, i32 current_index);
 void		 	move_using_rrb(t_two_stacks **stacks, i32 current_index);
 i32				find_biggest_index(t_stack *stack);
 
-void			make_index(t_stack *stack, i32 len);
+void			make_index(t_stack *stack, i32 len, t_two_stacks **stacks);
 void			q_sort(i32 *num, i32 start, i32 end);
-//i32				parti(i32 *num, i32 start, i32 end);
 
 void			sa(t_two_stacks *stacks);
 void			sb(t_two_stacks *stacks);
@@ -117,6 +114,9 @@ void			sort_through(t_two_stacks **stacks);
 i32				find_next_index(t_stack *stack, i32 chunk);
 void		 	replace_in_elem_a(t_two_stacks **stacks, i32 index);
 void	 		hard_reput_in_a(t_two_stacks **stacks, i32 chunk);
-i32				try_parse(char *str);
+void			try_parse(char *str, t_two_stacks **stacks);
+void			error_handle(t_two_stacks **stacks);
+i32				is_sorted(t_stack *a);
+void			free_stacks(t_two_stacks **stacks);
 
 #endif

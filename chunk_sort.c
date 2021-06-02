@@ -7,14 +7,14 @@ void		chunk_sort(t_two_stacks **stacks)
 		if (chunk_length((*stacks)->b, (*stacks)->b->chunk) <= 10)
 		{
 			make_index((*stacks)->b, chunk_length((*stacks)->b, (*stacks)
-			->b->chunk));
+			->b->chunk), stacks);
 			sort_through(stacks);
 		}
 		else
 		{
 			recursively_divide_chunk_b(stacks, (*stacks)->b->chunk);
 			make_index((*stacks)->a, chunk_length((*stacks)->a, (*stacks)
-			->a->chunk));
+			->a->chunk), stacks);
 			recursively_divide_chunk_a(stacks, (*stacks)->a->chunk, 1);
 		}
 	}
@@ -85,7 +85,7 @@ void 		recursively_divide_chunk_b(t_two_stacks **stacks, i32 chunk)
 
 	len = chunk_length((*stacks)->b, chunk);
 	p = len / 2;
-	make_index((*stacks)->b, len);
+	make_index((*stacks)->b, len, stacks);
 	while (left_bigger_p((*stacks)->b, chunk, p))
 		replace_in_a(stacks, p, chunk);
 	len = chunk_length((*stacks)->b, chunk);
@@ -112,7 +112,7 @@ void 		recursively_divide_chunk_a(t_two_stacks **stacks, i32 chunk,
 
 	len = chunk_length((*stacks)->a, chunk);
 	p = len / 2;
-	make_index((*stacks)->a, len);
+	make_index((*stacks)->a, len, stacks);
 	while (left_less_p_ch((*stacks)->a, chunk, p))
 		replace_in_b(stacks, p, chunk, inc);
 	len = chunk_length((*stacks)->a, chunk);

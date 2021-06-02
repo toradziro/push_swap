@@ -11,6 +11,11 @@ void	sort_distributor(t_two_stacks **stacks)
 	t_two_stacks	*stacks_p;
 
 	stacks_p = *stacks;
+	if (!is_sorted((*stacks)->a))
+	{
+		free_stacks(stacks);
+		return ;
+	}
 	if (stacks_p->a->length == 1)
 		return ;
 	else if (stacks_p->a->length == 2)
